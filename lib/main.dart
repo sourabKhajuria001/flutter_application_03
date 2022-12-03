@@ -6,13 +6,13 @@ import 'package:flutter_application_03/Views/register_view.dart';
 import 'package:flutter_application_03/Views/verify_email_view.dart';
 import 'firebase_options.dart';
 import 'dart:developer' as devtools show log;
-//   13/35/38
+//   13/35/38.
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
