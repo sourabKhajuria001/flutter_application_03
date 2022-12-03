@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_03/Views/login_view.dart';
 import 'package:flutter_application_03/Views/register_view.dart';
 import 'package:flutter_application_03/Views/verify_email_view.dart';
+import 'package:flutter_application_03/constants/route.dart';
 import 'firebase_options.dart';
 import 'dart:developer' as devtools show log;
 //   13/35/38.
@@ -18,9 +19,9 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
-        '/notes/': (context) => const NotesView() // main UI
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const NotesView() // main UI
       },
     ),
   );
@@ -81,7 +82,7 @@ class _NotesViewState extends State<NotesView> {
                   await FirebaseAuth.instance.signOut();
                   if (!mounted) return; // SRB added this
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login/',
+                    loginRoute,
                     (_) => false,
                   );
                 }
