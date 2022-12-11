@@ -85,6 +85,7 @@ class _NewNoteViewState extends State<NewNoteView> {
               case ConnectionState.done:
                 _note = snapshot.data as DatabaseNote;
                 _setupTextControllerListener();
+
                 return TextField(
                   controller: _textController,
                   keyboardType: TextInputType.multiline,
