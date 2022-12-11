@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_03/Views/login_view.dart';
+import 'package:flutter_application_03/Views/notes/new_note_view.dart';
 import 'package:flutter_application_03/Views/register_view.dart';
 import 'package:flutter_application_03/Views/verify_email_view.dart';
 import 'package:flutter_application_03/constants/route.dart';
 import 'package:flutter_application_03/services/auth/auth_service.dart';
-import 'Views/notes_view.dart';
+import 'Views/notes/notes_view.dart';
 import 'dart:developer' as devtools show log;
-//   16/11/45.
+//   21/53/51.
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ void main() {
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(), // main UI
         verifyEmailRoute: (context) => const VerifyEmailView(),
+        newNoteRoute: (context) => const NewNoteView(),
       },
     ),
   );
