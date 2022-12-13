@@ -56,10 +56,15 @@ class NotesService {
     // make sure note exists
     await getNote(id: note.id);
     // update DB
-    final updatesCount = await db.update(notesTable, {
-      textColumn: text,
-      isSyncedWithCloudColumn: 0,
-    });
+    final updatesCount = await db.update(
+      notesTable,
+      {
+        textColumn: text,
+        isSyncedWithCloudColumn: 0,
+      },
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
 
     if (updatesCount == 0) {
       throw CouldNotUpdateNoteException();
@@ -81,6 +86,8 @@ class NotesService {
       print('db is NOT open');
     }
     final notes = await db.query(notesTable);
+    print('Get all >>>>>> $notes');
+
     return notes.map((noteRow) => DatabaseNote.fromRow(noteRow));
   }
 
@@ -142,6 +149,7 @@ class NotesService {
     }
     const text = '';
 // create notes
+
     final noteId = await db.insert(notesTable, {
       userIdColumn: owner.id,
       textColumn: text,
@@ -154,8 +162,11 @@ class NotesService {
       text: text,
       isSyncedWithCloud: true,
     );
+    print('new before add $note');
     _notes.add(note);
+    print('new >>>>>> $_notes');
     _notesStreamController.add(_notes);
+
     return note;
   }
 
