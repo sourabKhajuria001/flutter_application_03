@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 @immutable //Immutable data constructs are those that cannot be mutated (altered) after they've been initialized.
 class AuthUser {
-  final String? email;
+  final String id;
+  final String email;
   final bool isEmailVerified;
 
   const AuthUser({
+    required this.id,
     required this.email,
     required this.isEmailVerified,
   }); // constructor
@@ -16,8 +18,9 @@ class AuthUser {
   // in video 15:18:11
   factory AuthUser.fromFirebase(User user) {
     return AuthUser(
-      email: user.email,
+      email: user.email!,
       isEmailVerified: user.emailVerified,
+      id: user.uid,
     );
   }
 }

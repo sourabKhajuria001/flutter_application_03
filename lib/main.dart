@@ -7,7 +7,7 @@ import 'package:flutter_application_03/constants/route.dart';
 import 'package:flutter_application_03/services/auth/auth_service.dart';
 import 'Views/notes/notes_view.dart';
 import 'dart:developer' as devtools show log;
-//   22/40/47.
+//   1:00:46:33.
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
