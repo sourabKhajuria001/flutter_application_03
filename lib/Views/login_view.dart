@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_03/constants/route.dart';
 import 'package:flutter_application_03/services/auth/auth_exceptions.dart';
-import 'package:flutter_application_03/services/auth/auth_service.dart';
+import 'package:flutter_application_03/services/auth/bloc/auth_event.dart';
+import 'package:flutter_application_03/services/auth/bloc/auth_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../services/auth/bloc/auth_bloc.dart';
 import '../utilities/dialogs/error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -44,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
-              hintText: 'Enter email',
+              hintText: 'Enter email ',
             ),
           ),
           TextField(
@@ -54,38 +57,34 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: false,
             decoration: const InputDecoration(hintText: 'Enter password'),
           ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
-                // ignore: unused_local_variable
-                final userCredential = await AuthService.firebase().logIn(
-                  email: email,
-                  password: password,
-                );
-
-                final user = AuthService.firebase().currentUser;
-                if (user?.isEmailVerified ?? false) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    notesRoute,
-                    (route) => false,
-                  );
-                } else {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    verifyEmailRoute,
-                    (route) => false,
-                  );
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) async {
+              if (state is AuthStateLoggedOut) {
+                print(state.exception);
+                if (state.exception is UserNotLoggedInAuthException) {
+                  await showErrorDialog(context, 'User not found');
+                } else if (state.exception is WrongPasswordAuthException) {
+                  await showErrorDialog(context, 'Wrong credentials');
+                } else if (state.exception is GenericAuthException) {
+                  await showErrorDialog(context, 'Authetication error');
                 }
-              } on UserNotFoundAuthException {
-                await showErrorDialog(context, 'User not found');
-              } on WrongPasswordAuthException {
-                await showErrorDialog(context, 'Wrong password entered.');
-              } on GenericAuthException {
-                await showErrorDialog(context, 'Authentication error.');
+              } else {
+                print('nnnn');
               }
             },
-            child: const Text('Login'),
+            child: TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                context.read<AuthBloc>().add(
+                      AuthEventLogIn(
+                        email,
+                        password,
+                      ),
+                    );
+              },
+              child: const Text('Login'),
+            ),
           ),
           TextButton(
               onPressed: () {
