@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_03/Views/forgot_password_view.dart';
 import 'package:flutter_application_03/Views/register_view.dart';
 import 'package:flutter_application_03/helpers/loading/loading_screen.dart';
 import 'package:flutter_application_03/services/auth/bloc/auth_bloc.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_application_03/Views/notes/create_update_note_view.dart'
 import 'package:flutter_application_03/Views/verify_email_view.dart';
 import 'package:flutter_application_03/constants/route.dart';
 import 'Views/notes/notes_view.dart';
-//   1:04:57:22
+//   1:07:54:02
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +58,8 @@ class HomePage extends StatelessWidget {
           return const LoginView();
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
+        } else if (state is AuthStateForgotPassword) {
+          return const ForgotPasswordView();
         } else {
           return const Scaffold(
             body: CircularProgressIndicator(),
