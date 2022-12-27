@@ -12,13 +12,14 @@ import 'package:flutter_application_03/Views/notes/create_update_note_view.dart'
 import 'package:flutter_application_03/Views/verify_email_view.dart';
 import 'package:flutter_application_03/constants/route.dart';
 import 'Views/notes/notes_view.dart';
-//   1:07:54:02
+//   1:09:02:02
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
       title: 'My Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
